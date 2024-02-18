@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
-const dbName = "storekeeper";
-const dbUser = "root";
-const dbPassword = "root";
+const dbName = "sql5685027";
+const dbUser = "sql5685027";
+const dbPassword = "5cjAYUYbHb";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: "localhost",
-  port: "8889",
+  host: "sql5.freemysqlhosting.net",
+  port: "3306",
   dialect: "mysql",
 });
 
