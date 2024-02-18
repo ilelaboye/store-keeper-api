@@ -7,6 +7,7 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: "store-keeper.cfqe88m26610.eu-north-1.rds.amazonaws.com",
   port: "3306",
   dialect: "mysql",
+  logging: console.log
 });
 
 const db = {};
