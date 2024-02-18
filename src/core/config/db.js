@@ -23,8 +23,9 @@ db.user.hasMany(db.product, {
 db.user.hasMany(db.transaction, {
   foreignKey: "user_id",
 });
-db.transaction.belongsTo(db.transaction, {
+db.transaction.belongsTo(db.product, {
   foreignKey: "product_id",
+  as: "product",
 });
 
 module.exports = db;

@@ -77,7 +77,7 @@ exports.getTransactions = async (req, res) => {
     const id = req.params.id;
     const prods = await Transaction.findAll({
       where: { user_id: id },
-      include: Product,
+      include: "product",
     });
 
     return res.status(200).json(prods);

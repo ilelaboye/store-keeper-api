@@ -16,6 +16,8 @@ module.exports = (app) => {
   );
   router.get("/get-products/:id", product.getProducts);
   router.get("/get-kpi/:id", product.getKpi);
+  router.post("/add-transaction", product.addTransaction);
+  router.get("/get-transaction/:id", product.getTransactions);
 
   app.use("/api/products", router);
 };
