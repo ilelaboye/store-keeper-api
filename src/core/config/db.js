@@ -1,13 +1,24 @@
 const Sequelize = require("sequelize");
-const dbName = "store-keeper";
-const dbUser = "admin";
-const dbPassword = "#StoreKeeper2024";
+const dbName = "storekeeperdb";
+const dbUser = "storekeeperdb";
+const dbPassword = "storekeeper@123";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: "store-keeper.cfqe88m26610.eu-north-1.rds.amazonaws.com",
+  host: "store-keeper-414916:africa-south1:storekeeperdb",
   port: "3306",
   dialect: "mysql",
 });
+
+// const Sequelize = require("sequelize");
+// const dbName = "sql5685027";
+// const dbUser = "sql5685027";
+// const dbPassword = "5cjAYUYbHb";
+
+// const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+//   host: "sql5.freemysqlhosting.net",
+//   port: "3306",
+//   dialect: "mysql",
+// });
 
 const db = {};
 db.Sequelize = Sequelize;
