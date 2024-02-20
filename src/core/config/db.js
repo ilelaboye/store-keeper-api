@@ -7,7 +7,13 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: "store-keeper-414916:africa-south1:storekeeperdb",
   port: "3306",
   dialect: "mysql",
-  logging: (...msg) => console.log(msg)
+  logging: (...msg) => console.log(msg),
+  pool: {
+    max: 500,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
 // const Sequelize = require("sequelize");
