@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node --trace-deprecation --trace-warnings --optimize_for_size --max_old_space_size=460 index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles --forceExit --watchAll --maxWorkers=1"
   },
   "author": "ilelaboye lekan",
   "license": "ISC",

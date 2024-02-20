@@ -5,7 +5,7 @@ const dbPassword = "storekeeper@123";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: "store-keeper-414916:africa-south1:storekeeperdb",
-  port: "3306",
+  // port: "3306",
   dialect: "mysql",
   logging: (...msg) => console.log(msg),
   pool: {
