@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
-const dbName = "storekeeperdb";
-const dbUser = "storekeeperdb";
-const dbPassword = "storekeeper@123";
+const dbName = "sql5685027";
+const dbUser = "sql5685027";
+const dbPassword = "5cjAYUYbHb";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: "store-keeper-414916:africa-south1:storekeeperdb",
-  // port: "3306",
+  host: "sql5.freemysqlhosting.net",
+  port: "3306",
   dialect: "mysql",
   logging: (...msg) => console.log(msg),
   pool: {
@@ -42,7 +42,7 @@ db.user.hasMany(db.transaction, {
   foreignKey: "user_id",
 });
 db.transaction.belongsTo(db.product, {
-  foreignKey: "product_id",
+  foreignKey: "id",
   as: "product",
 });
 
