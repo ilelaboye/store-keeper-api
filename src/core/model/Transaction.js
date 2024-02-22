@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Transaction = sequelize.define("transactions", {
-    user_id: {
+    userId: {
       type: Sequelize.INTEGER,
     },
-    product_id: {
-      type: Sequelize.STRING,
+    productId: {
+      type: Sequelize.INTEGER,
     },
     quantity: {
       type: Sequelize.DECIMAL,
@@ -13,7 +13,13 @@ module.exports = (sequelize, Sequelize) => {
     price: {
       type: Sequelize.STRING,
     },
+    payment_type: {
+      type: Sequelize.STRING,
+    },
     total: {
+      type: Sequelize.STRING,
+    },
+    email: {
       type: Sequelize.STRING,
     },
   });

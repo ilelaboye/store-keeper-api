@@ -1,7 +1,18 @@
 const db = require("../core/config/db");
 const Product = db.product;
 const Transaction = db.transaction;
+const User = db.user;
+const Op = db.Sequelize.Op;
 const cloudinary = require("cloudinary").v2;
+const Mailjet = require("node-mailjet");
+const mailjet = Mailjet.apiConnect(
+  "2df97689f9a0459364d36fcab356c640",
+  "9bb2764db2f1eef07358aee153b669b1"
+);
+
+const email_from = "development@leverpay.io";
+const email_from_name = "Aspire";
+
 cloudinary.config({
   cloud_name: "duell3hrn",
   api_key: "975521588482449",
@@ -21,7 +32,7 @@ exports.addProduct = async (req, res) => {
       }
     }
     const prod = {
-      user_id: id,
+      userId: id,
       name,
       price,
       code,
@@ -41,7 +52,7 @@ exports.getProducts = async (req, res) => {
   try {
     console.log("get products");
     const id = req.params.id;
-    const prods = await Product.findAll({ where: { user_id: id } });
+    const prods = await Product.findAll({ where: { userId: id } });
     return res.status(200).json(prods);
   } catch (err) {
     console.log("err", err);
@@ -51,20 +62,43 @@ exports.getProducts = async (req, res) => {
 
 exports.addTransaction = async (req, res) => {
   try {
-    console.log(req.body);
-    const { user_id, product_id, quantity, price, total } = req.body;
+    const { user_id, email, payment_type } = req.body;
+    const prods = JSON.parse(req.body.products);
+    var hold = [];
+    prods.map(async (item) => {
+      var a = {
+        userId: user_id,
+        productId: item.product.id,
+        price: item.product.price,
+        quantity: item.quantity,
+        total: item.total,
+        payment_type: payment_type,
+        email: email,
+      };
+      hold.push(a);
+    });
+    console.log(hold);
+    const ab = await Transaction.bulkCreate(hold);
+    console.log("after ", ab);
+    if (email.length > 0) {
+      const user = await User.findByPk(user_id);
+      loan_submitted_mail(email, user.storename, prods);
+    }
 
-    const prod = {
-      user_id,
-      product_id,
-      price,
-      quantity,
-      total,
-    };
+    // const send = {
+    //   userId:user_id,
+    //   email,
+    //   payment_type,
+    //   price,
+    //   total,
+    //   quantity,
+    //   product_id,
+    // };
 
-    let transaction = new Transaction(prod);
-    await transaction.save();
-    return res.status(200).json({ message: "Transaction created" });
+    // let transaction = new Transaction(send);
+    // await transaction.save();
+
+    return res.status(200).send({ message: "Transaction created" });
   } catch (err) {
     console.log("err", err);
     return res.status(500).send(err);
@@ -76,7 +110,7 @@ exports.getTransactions = async (req, res) => {
     console.log("get transactions");
     const id = req.params.id;
     const prods = await Transaction.findAll({
-      where: { user_id: id },
+      where: { userId: id },
       include: "product",
     });
 
@@ -91,9 +125,12 @@ exports.getKpi = async (req, res) => {
   try {
     console.log("get kpi");
     const id = req.params.id;
-    const prods = await Product.count({ where: { user_id: id } });
+    const prods = await Product.count({ where: { userId: id } });
+    const sales = await Transaction.count({
+      where: { createdAt: { [Op.gte]: new Date().toJSON().slice(0, 10) } },
+    });
 
-    return res.status(200).json({ products: prods, sales: 0 });
+    return res.status(200).json({ products: prods, sales: sales });
   } catch (err) {
     console.log("err", err);
     return res.status(500).send(err);
@@ -133,4 +170,32 @@ const uploadImages = async (file, convert = true) => {
     });
 
   return resp;
+};
+
+const loan_submitted_mail = async (email, storename, product) => {
+  console.log("calling send email");
+  var table = `<h5>Hi,</h5><p>You have receive an invoice from ${storename}</p><table border='1' style='width:100%'><thead><tr><td>Product</td><td>Quantity</td><td>Price</td><td>Total</td></tr></thead><tbody>`;
+  for (var i = 0; i < product.length; i++) {
+    var ab = `<tr><td>${product[i].product.name}</td><td>${product[i].quantity}</td><td>${product[i].product.price}</td><td>${product[i].total}</td></tr>`;
+    table += ab;
+  }
+  table += "</tbody></table>";
+  mailjet.post("send", { version: "v3.1" }).request({
+    Messages: [
+      {
+        From: {
+          Email: email_from,
+          Name: "Leverage Tech Ivy",
+        },
+        To: [
+          {
+            Email: email,
+          },
+        ],
+        Subject: "Invoice From " + storename,
+        HTMLPart: table,
+      },
+    ],
+  });
+  return true;
 };

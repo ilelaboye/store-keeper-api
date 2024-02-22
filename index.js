@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 4000;
 const db = require("./src/core/config/db");
 const bodyparser = require("body-parser");
 
-db.sequelize.sync();
+db.sequelize.sync({ force: false, alter: true });
 app.use(cors());
 
 app.use(bodyparser.urlencoded({ limit: "50mb", extended: false }));
