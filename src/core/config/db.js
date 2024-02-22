@@ -1,30 +1,13 @@
-// const Sequelize = require("sequelize");
-// const dbName = "sql5685027";
-// const dbUser = "sql5685027";
-// const dbPassword = "5cjAYUYbHb";
-
-// const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-//   host: "sql5.freemysqlhosting.net",
-//   port: "3306",
-//   dialect: "mysql",
-//   logging: (...msg) => console.log(msg),
-//   pool: {
-//     max: 500,
-//     min: 0,
-//     acquire: 30000,
-//     idle: 10000,
-//   },
-// });
-
 const Sequelize = require("sequelize");
-const dbName = "storekeeper";
-const dbUser = "root";
-const dbPassword = "root";
+const dbName = "sql5685027";
+const dbUser = "sql5685027";
+const dbPassword = "5cjAYUYbHb";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: "localhost",
-  port: "8889",
+  host: "sql5.freemysqlhosting.net",
+  port: "3306",
   dialect: "mysql",
+  logging: (...msg) => console.log(msg),
   pool: {
     max: 500,
     min: 0,
@@ -32,6 +15,23 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
     idle: 10000,
   },
 });
+
+// const Sequelize = require("sequelize");
+// const dbName = "storekeeper";
+// const dbUser = "root";
+// const dbPassword = "root";
+
+// const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+//   host: "localhost",
+//   port: "8889",
+//   dialect: "mysql",
+//   pool: {
+//     max: 500,
+//     min: 0,
+//     acquire: 30000,
+//     idle: 10000,
+//   },
+// });
 
 const db = {};
 db.Sequelize = Sequelize;
