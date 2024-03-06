@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const dbName = "sql5685027";
-const dbUser = "sql5685027";
-const dbPassword = "5cjAYUYbHb";
+const dbName = "sql3689125";
+const dbUser = "sql3689125";
+const dbPassword = "j9kjMpFl4W";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: "sql5.freemysqlhosting.net",
