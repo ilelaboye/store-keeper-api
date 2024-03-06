@@ -4,7 +4,7 @@ const dbUser = "sql3689125";
 const dbPassword = "j9kjMpFl4W";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: "sql5.freemysqlhosting.net",
+  host: "sql3.freemysqlhosting.net",
   port: "3306",
   dialect: "mysql",
   logging: (...msg) => console.log(msg),
